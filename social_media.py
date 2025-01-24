@@ -17,7 +17,7 @@ def generate_uuid():
 
 
 # User class: for creating a user record in the database
-class User(Base):
+class Users(Base):
     __tablename__ = "users"
     userID = Column(
         "userID", String, primary_key=True, default=generate_uuid, nullable=False
@@ -49,12 +49,30 @@ class Posts(Base):
         self.post_content = post_content
 
 
+# Likes class: for liking a post
+class Likes(Base):
+    __tablename__ = "likes"
+    likeId = Column(
+        "likeId", String, primary_key=True, default=generate_uuid, nullable=False
+    )
+    userId = Column("userId", String, ForeignKey("users.userID"), nullable=False)
+    post_id = Column("post_id", String, ForeignKey("posts.post_id"), nullable=False)
+
+    def __init__(self, userId, post_id):
+        self.userId = userId
+        self.post_id = post_id
+
+
 # function for adding a user to the database
 def add_user(first_name, last_name, profile_name, email, Session):
     with Session() as session:
-        user = User(first_name, last_name, profile_name, email)
-        session.add(user)
-        session.commit()
+        # check for existing users
+        if session.query(Users).filter(Users.email == email).all():
+            print("User with that email already exists!")
+        else:
+            user = Users(first_name, last_name, profile_name, email)
+            session.add(user)
+            session.commit()
 
 
 # function for adding a post to the database
@@ -65,18 +83,49 @@ def add_post(user_id, post_content, Session):
         session.commit()
 
 
+# liking a post
+def like_post(user_id, post_id, Session):
+    with Session() as session:
+        # check if post already like by the same person
+        # post_liked  = session.query().join
+
+        like = Likes(user_id, post_id)
+        session.add(like)
+        session.commit()
+        print("like was added!")
+
+
 # creating sqlite db
-db = "sqlite:///socialDB.db"
-engine = create_engine(db, echo=True)
+db = "sqlite:///socialDB.db"  # database path
+engine = create_engine(db, echo=False)
 Base.metadata.create_all(bind=engine)
 
 # creating a session
 Session = sessionmaker(bind=engine)
 
-
 # add a user record to the database
-add_user("Jeanluc", "Nkurikiye", "@jeanlu", "jeanluc@gmail.com", Session)
+# add_user("Jeanluc", "Nkurikiye", "@jeanlu", "jeanluc@gmail.com", Session)
 
 # add a post record to the database
-user_id = "sdf"
-add_post(user_id, "I love doing wavumbuzi.. here is why..", Session)
+# user_id = "6f77faba-1c02-44dc-9935-d76626d13f9c"
+# add_post(user_id, "How have studying at KSS been for me, not what you expect!@..", Session)
+
+# all_posts = (
+#     Session()
+#     .query(Posts)
+#     .filter(Posts.userId == "6f77faba-1c02-44dc-9935-d76626d13f9c")
+#     .all()
+# )
+# posts_ = [post.post_content for post in all_posts]
+# print(posts_)
+# for post in all_posts:
+#     print(post.post_content)
+
+# like post..
+user_id = "6f77faba-1c02-44dc-9935-d76626d13f9c"
+post_id = "4a56d213-4cc7-45ee-88d1-d92ed4cf0206"
+like_post(user_id, post_id, Session)
+
+#trying to retrieve a like id
+likes  = Session().query(Likes).filter(Likes.post_id == "4a56d213-4cc7-45ee-88d1-d92ed4cf0206").count()
+print(f"this post (4a56d213-4cc7-45ee-88d1-d92ed4cf0206) has {likes} likes")

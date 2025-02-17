@@ -1,0 +1,17 @@
+{% extends "./layout.html" %}
+{% block body %}
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Date <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(1)">Amount <i class="fa-solid fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in bankdepo %}
+                    <tr>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+{% endblock%}

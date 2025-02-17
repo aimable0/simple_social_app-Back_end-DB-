@@ -1,0 +1,21 @@
+{% extends "./layout.html" %}
+{% block body %}
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Date <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(1)">Amount <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(2)">Fee <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(3)">Service provider <i class="fa-solid fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cashpower %}
+                    <tr>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.amount }}</td>
+                        <td>{{ item.fee }}</td>
+                        <td>{{ item.service_provider }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+{% endblock%}

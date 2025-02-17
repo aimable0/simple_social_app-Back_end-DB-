@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTN Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="./images/mtnlogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'momo/styles.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="nav-header">
+            <h1><span>MTN</span> Dashboard</h1>
+        </div>
+        <ul class="nav-menu">
+            <li>
+                <a href="{% url 'momo:home' %}">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="analytics.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="money-menu">
+            <ul>
+                <li>
+                    <a href="{% url 'momo:moneyrecieved' %}">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Incoming Money</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:paymenttocode' %}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Payments To Code Holders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:transferstomomo' %}">
+                        <i class="fa-solid fa-mobile"></i>
+                        <span>Transfers to Mobile Numbers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:bankdepo' %}">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Bank Deposits</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:airtime' %}">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Airtime Bill Payments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:cashpower' %}">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Cash Power Bill Payments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:transactions' %}">
+                        <i class="fa-solid fa-people-arrows"></i>
+                        <span>Transactions by Third Parties</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:withdrawals' %}">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Withdrawals from Agents</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'momo:data' %}">
+                        <i class="fa-solid fa-wifi"></i>
+                        <span>Internet and Voice Bundle Purchases</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="sub-content">
+        <header class="dashboard-header">
+            <div class="breadcrumb">Dashboard > Home</div>
+            <div class="header-right">
+                <input type="search" placeholder="Search...">
+                <div class="date-picker">Apr 17, 2023</div>
+                <div class="notifications"><i class="fa-solid fa-bell"></i></div>
+            </div>
+        </header>
+
+        <section class="overview">
+            <h2>Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Users</h3>
+                        <span class="trend-up">+25%</span>
+                    </div>
+                    <div class="stat-value">14k</div>
+                    <div class="stat-chart">
+                        <canvas id="usersChart"></canvas>
+                    </div>
+                    <div class="stat-footer">Last 30 days</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Conversions</h3>
+                        <span class="trend-down">-25%</span>
+                    </div>
+                    <div class="stat-value">325</div>
+                    <div class="stat-chart">
+                        <canvas id="conversionsChart"></canvas>
+                    </div>
+                    <div class="stat-footer">Last 30 days</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Event count</h3>
+                        <span class="trend-up">+5%</span>
+                    </div>
+                    <div class="stat-value">200k</div>
+                    <div class="stat-chart">
+                        <canvas id="eventsChart"></canvas>
+                    </div>
+                    <div class="stat-footer">Last 30 days</div>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-container">
+                    <h3>Sessions</h3>
+                    <div class="chart-header">
+                        <div class="value">13,277</div>
+                        <div class="trend-up">+35%</div>
+                    </div>
+                    <canvas id="sessionsChart"></canvas>
+                    <div class="chart-footer">Sessions per day for the last 30 days</div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Page views and downloads</h3>
+                    <div class="chart-header">
+                        <div class="value">1.3M</div>
+                        <div class="trend-down">-8%</div>
+                    </div>
+                    <canvas id="pageViewsChart"></canvas>
+                    <div class="chart-footer">Page views and downloads for the last 6 months</div>
+                </div>
+            </div>
+        </section>
+        </div>
+    </main>
+</body>
+</html>

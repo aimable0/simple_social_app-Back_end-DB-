@@ -114,11 +114,21 @@ Session = sessionmaker(bind=engine)
 
 # try querying some data..
 session = Session()
-objs = [Users, Likes, Posts]
-count = []
-for obj in objs:
-    count += session.query(obj)
+# objs = [Users, Likes, Posts]
+# i = 1
+# obj_dict = {}
+# for table in objs:
+#     for obj in session.query(table):
+#         obj_dict[obj.__class__.__name__] = obj
 
-print(len(count))
+# for key, value in obj_dict.items():
+#     print(key, value)
 
+user_dict = {}
+for obj in session.query(Users):
+    user_dict[f"{obj.__class__.__name__}.{obj.userID}"] = obj
 
+for key, value in user_dict.items():
+    print(key, ':', value)
+
+session.delete()

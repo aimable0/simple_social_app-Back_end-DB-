@@ -1,0 +1,25 @@
+{% extends "./layout.html" %}
+{% block body %}
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Date <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(1)">First Name <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(2)">Last Name <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(3)">Tel <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(4)">Amount <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="sortTable(5)">Fee <i class="fa-solid fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in momotransfers %}
+                    <tr>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.first_name }}</td>
+                        <td>{{ item.last_name }}</td>
+                        <td>{{ item.tel }}</td>
+                        <td>{{ item.amount }}</td>
+                        <td>{{ item.fee }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+{% endblock%}
